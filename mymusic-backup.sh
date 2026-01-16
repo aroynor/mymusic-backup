@@ -10,7 +10,8 @@ mkdir -p "$BACKUP_DIR"
 echo "$(date): Starting mymusic backup..." >> "$LOG_FILE"
 
 # Sync files from source to backup using rsync
-rsync -avh "$SOURCE_DIR/" "$BACKUP_DIR/" >> "$LOG_FILE" 2>&1
+# Skip permissions/ownership for external drives
+rsync -avh --no-perms --no-owner --no-group "$SOURCE_DIR/" "$BACKUP_DIR/" >> "$LOG_FILE" 2>&1
 
 # Check if rsync was successful
 if [ $? -eq 0 ]; then
